@@ -28,7 +28,7 @@ def count_words(file_name):
 #Returns either toxic or neutral based off of a Naive Bayes model and an input sentence
 def compute_class_prob(sentence, neutral_counts, toxic_counts):
 	neutral_vocab_size = len(neutral_counts)
-	toxic_vocab_size = len(toxic_Scounts)
+	toxic_vocab_size = len(toxic_counts)
 	neutral_prob = 0
 	toxic_prob = 0
 
@@ -62,7 +62,7 @@ def main():
 	answers = []
 	correct_answers = 0
 	non_null_answers = 0
-	num_training_texts = 20000
+	num_test_texts = 20000
 
 	#Read in the testing data and correct answers
 	test_set = "toxic_comment_data/test.csv"
@@ -70,7 +70,7 @@ def main():
 	test_labels = "toxic_comment_data/test_labels.csv"
 	test_labels_data_frame = pd.read_csv(test_labels)
 
-	for index, row in test_data_frame.head(num_training_texts).iterrows():
+	for index, row in test_data_frame.head(num_test_texts).iterrows():
 		#Normalize input
 		sentence = row['comment_text']
 		sentence = sentence.lower()
@@ -86,7 +86,7 @@ def main():
 
 
 	#Check accuracy of our model on the testing data
-	for index, row in test_labels_data_frame.head(num_training_texts).iterrows():
+	for index, row in test_labels_data_frame.head(num_test_texts).iterrows():
 		answer = "null"
 		if(row['toxic'] == 1 or row['severe_toxic'] == 1 or row['obscene'] == 1 or row['threat'] == 1 or row['insult'] == 1 or row['identity_hate'] == 1):
 			if(id_predictions[index] == "toxic"):
